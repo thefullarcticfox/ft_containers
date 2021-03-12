@@ -15,4 +15,4 @@ What's done:
 - pair and some relational operator templates
 
 ### Run tests
-```clang++ main.cpp -std=c++98 -Wall -Wextra -Werror && ./a.out```
+Open ```vs_containers.sln``` and build in Debug or Release x64 configuration
