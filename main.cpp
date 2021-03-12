@@ -15,6 +15,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
+#include <random>
+#include <windows.h>
 
 #define	CLR_GOOD	"\033[1;32m"
 #define	CLR_ERROR	"\033[41;30m"
@@ -35,6 +37,14 @@ void		iostreamhack()
 	std::ios_base::sync_with_stdio(false);
 //	unties cin and cout meaning that if i used cin i would need to manually flush cout
 	std::cin.tie(NULL);
+}
+
+std::default_random_engine				generator;
+
+int			ft_rand()
+{
+	std::uniform_int_distribution<int>	distrib;
+	return (distrib(generator));
 }
 
 void		error_exception(const std::string& hint = "")
@@ -1209,7 +1219,7 @@ void		ft_vector_tests(int ac, char **av)
 
 		while (svect.size() < 20)
 		{
-			bool	a(rand() % 10000000);
+			bool	a(ft_rand() % 10000000);
 			svect.push_back(std::vector<size_t>(20, a));	fvect.push_back(ft::vector<size_t>(20, a));
 		}
 
@@ -1267,7 +1277,7 @@ void		ft_vectorbool_tests()
 
 		while (svect.size() < 20)
 		{
-			bool	a(rand() % 2);
+			bool	a(ft_rand() % 2);
 			svect.push_back(std::vector<bool>(20, a));	fvect.push_back(ft::vector<bool>(20, a));
 		}
 
@@ -1682,7 +1692,7 @@ void		ft_stack_tests()
 
 		while (slist.size() < 1000)
 		{
-			int		tmp(rand());
+			int		tmp(ft_rand());
 			if (slist.size() % 2)
 			{	slist.push_back(tmp);		flist.push_back(tmp);	}
 			else
@@ -1755,7 +1765,7 @@ void		ft_queue_tests()
 
 		while (slist.size() < 1000)
 		{
-			int		tmp(rand());
+			int		tmp(ft_rand());
 			if (slist.size() % 2)
 			{	slist.push_back(tmp);		flist.push_back(tmp);	}
 			else
@@ -1805,17 +1815,17 @@ struct mapdata {
 	std::string			genstr() {
 		std::string		res = "";
 		while (res.length() < 20)
-			res += char(97 + (std::rand() % 26));
+			res += char(97 + (ft_rand() % 26));
 		return (res);
 	}
 	std::wstring		genwstr() {
 		std::wstring	res;
 		while (res.length() < 20)
-			res += wchar_t(97 + (std::rand() % 26));
+			res += wchar_t(97 + (ft_rand() % 26));
 		return (res);
 	}
-	mapdata() : _b(rand()), _c(rand()), _sc(rand()), _uc(rand()), _wc(rand()), _s(rand()),
-	_us(rand()), _i(rand()), _ui(rand()), _l(rand()), _ul(rand()), _ll(rand()), _ull(rand()),
+	mapdata() : _b(ft_rand()), _c(ft_rand()), _sc(ft_rand()), _uc(ft_rand()), _wc(ft_rand()), _s(ft_rand()),
+	_us(ft_rand()), _i(ft_rand()), _ui(ft_rand()), _l(ft_rand()), _ul(ft_rand()), _ll(ft_rand()), _ull(ft_rand()),
 	_str(genstr()), _wstr(genwstr()) {}
 	friend
 	bool	operator==(const mapdata &x, const mapdata &y) {
@@ -1827,6 +1837,17 @@ struct mapdata {
 	friend
 	bool	operator!=(const mapdata &x, const mapdata &y) { return (!(x == y)); }
 };
+
+/*	thanks to https://stackoverflow.com/a/31335254	*/
+#define CLOCK_REALTIME 0
+void		clock_gettime(int, struct timespec* spec)
+{
+	__int64		wintime;
+	GetSystemTimeAsFileTime((FILETIME*)&wintime);
+	wintime -= 116444736000000000i64;				//	1jan1601 to 1jan1970
+	spec->tv_sec = wintime / 10000000i64;			//	seconds
+	spec->tv_nsec = wintime % 10000000i64 * 100;	//	nano-seconds
+}
 
 double		gets(const timespec& start)
 {
@@ -1850,7 +1871,7 @@ void		checkconstmapmeths(const std::map<size_t, mapdata>& smap,
 	clock_gettime(CLOCK_REALTIME, &start);
 	for (size_t i = 0; i < count; i++)
 	{
-		size_t		find = size_t(rand()) % INSANITYSIZE;
+		size_t		find = size_t(ft_rand()) % INSANITYSIZE;
 		if (*(smap.lower_bound(find)) != *(fmap.lower_bound(find)) ||
 			*(smap.upper_bound(find)) != *(fmap.upper_bound(find)) ||
 			*(smap.equal_range(find).first) != *(fmap.equal_range(find).first) ||
@@ -1884,7 +1905,7 @@ void		ft_iwanttotorturemyram()
 	while ((smap.size() < INSANITYSIZE || fmap.size() < INSANITYSIZE) &&
 		slist.size() < INSANITYSIZE * 2 && flist.size() < INSANITYSIZE * 2)
 	{
-		std::pair<size_t, mapdata>	tmp(size_t(rand()) % INSANITYSIZE, mapdata());
+		std::pair<size_t, mapdata>	tmp(size_t(ft_rand()) % INSANITYSIZE, mapdata());
 		if (slist.size() % 2)
 		{
 			sres_t	sres = smap.insert(tmp);
@@ -2086,7 +2107,7 @@ void		ft_iwanttotorturemyram()
 		clock_gettime(CLOCK_REALTIME, &start);
 		while (smap.size() < INSANITYSIZE)
 		{
-			std::pair<size_t, mapdata>	tmp(size_t(rand()) % (INSANITYSIZE * 10), mapdata());
+			std::pair<size_t, mapdata>	tmp(size_t(ft_rand()) % (INSANITYSIZE * 10), mapdata());
 			smap[tmp.first] = tmp.second;
 			fmap[tmp.first] = tmp.second;
 		}
@@ -2102,7 +2123,7 @@ void		ft_iwanttotorturemyram()
 		clock_gettime(CLOCK_REALTIME, &start);
 		for (size_t i = 0; i < 100; i++)
 		{
-			size_t		tmp(size_t(rand()) % INSANITYSIZE);
+			size_t		tmp(size_t(ft_rand()) % INSANITYSIZE);
 			slist.remove(tmp);				flist.remove(tmp);
 			svect.erase(std::remove(svect.begin(), svect.end(), tmp), svect.end());
 			fvect.erase(std::remove(fvect.begin(), fvect.end(), tmp), fvect.end());
@@ -2134,7 +2155,7 @@ void		ft_iwanttotorturemyram()
 
 	{
 		size_t	prevsize = svect.size();
-		size_t	tmp(size_t(rand()) % INSANITYSIZE);
+		size_t	tmp(size_t(ft_rand()) % INSANITYSIZE);
 		clock_gettime(CLOCK_REALTIME, &start);
 		slist.resize(66666, tmp);		flist.resize(66666, tmp);
 		svect.resize(66666, tmp);		fvect.resize(66666, tmp);
@@ -2146,23 +2167,23 @@ void		ft_iwanttotorturemyram()
 		are_equal_print(flist, fvect);
 
 		{
-			tmp = size_t(rand());
+			tmp = size_t(ft_rand());
 			slist.front() = tmp;	flist.front() = tmp;
 			svect.front() = tmp;	fvect.front() = tmp;
-			tmp = size_t(rand());
+			tmp = size_t(ft_rand());
 			slist.back() = tmp;		flist.back() = tmp;
 			svect.back() = tmp;		fvect.back() = tmp;
-			tmp = size_t(rand());
+			tmp = size_t(ft_rand());
 
 			*(++(++(slist.begin()))) = tmp;			*(++(++(flist.begin()))) = tmp;
 			*((svect.begin() + 2)) = tmp;			*((fvect.begin() + 2)) = tmp;
-			tmp = size_t(rand());
+			tmp = size_t(ft_rand());
 			*(--(--(slist.end()))) = tmp;			*(--(--(flist.end()))) = tmp;
 			*((svect.end() - 2)) = tmp;				*((fvect.end() - 2)) = tmp;
 
 			*(++(++(++(slist.rbegin())))) = tmp;	*(++(++(++(flist.rbegin())))) = tmp;
 			*((svect.rbegin() + 3)) = tmp;			*((fvect.rbegin() + 3)) = tmp;
-			tmp = size_t(rand());
+			tmp = size_t(ft_rand());
 			*(--(--(--(--(slist.rend()))))) = tmp;	*(--(--(--(--(flist.rend()))))) = tmp;
 			*((svect.rend() - 4)) = tmp;			*((fvect.rend() - 4)) = tmp;
 			std::cout << "some changes by front/back and iterators" << std::endl;
@@ -2190,7 +2211,7 @@ void		ft_iwanttotorturemyram()
 		clock_gettime(CLOCK_REALTIME, &start);
 		for (size_t i = 0; i < svect.size(); i++)
 		{
-			size_t	tmp(size_t(rand()) % (svect.size() / 2));
+			size_t	tmp(size_t(ft_rand()) % (svect.size() / 2));
 			if (svect.erase(svect.begin() + tmp) - svect.begin() !=
 				fvect.erase(fvect.begin() + tmp) - fvect.begin())
 				error_exception();
@@ -2205,7 +2226,7 @@ void		ft_iwanttotorturemyram()
 		clock_gettime(CLOCK_REALTIME, &start);
 		for (size_t i = 0; i < INSANITYSIZE; i++)
 		{
-			size_t	tmp(size_t(rand()) % INSANITYSIZE);
+			size_t	tmp(size_t(ft_rand()) % INSANITYSIZE);
 			if (smap.erase(tmp) != fmap.erase(tmp))
 				error_exception();
 		}
