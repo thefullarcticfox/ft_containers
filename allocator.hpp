@@ -38,13 +38,13 @@ namespace ft {
 		}
 
 		void			deallocate(pointer p, size_type n)
-		{	::operator delete(p); (void)n;		}
+		{	::operator delete(p);	(void)n;						}
 
 		void			construct(pointer p, const_reference val)
-		{	::new ((void*)p) value_type(val);	}
+		{	::new (reinterpret_cast<void*>(p)) value_type(val);		}
 
 		void			destroy(pointer p)
-		{	p->~value_type();	}
+		{	p->~value_type();										}
 
 		size_type		max_size() const throw()
 		{
