@@ -1,11 +1,9 @@
 # ft_containers
 42 ft_containers project about some STL containers from C++98
 
-Works on Arch Linux and macOS.
+Works on Arch Linux and macOS. Insanity tests won't work on Windows because there's no `clock_gettime`
 
-Insanity tests won't work on Windows because there's no `clock_gettime`
-
-> For Windows 10/Visual Studio 2019 port check `vsport` branch
+For Windows 10/Visual Studio 2019 port check `vsport` branch
 
 What's done:
 - list
