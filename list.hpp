@@ -501,7 +501,7 @@ namespace ft {
 		//	operations:
 		void		splice(iterator position, list& x)
 		{
-			if (x.begin() == x.end() || &x == this)
+			if (x.empty() || &x == this)
 				return ;	// saving from undefined behaviour for now
 
 			list_node*	next = position.base();
@@ -527,7 +527,7 @@ namespace ft {
 
 		void		splice(iterator position, list& x, iterator i)
 		{
-			if (x.begin() == x.end() || i == x.end())
+			if (x.empty() || i == x.end() || i == position)
 				return ;
 
 			list_node*	next = position.base();
@@ -549,7 +549,7 @@ namespace ft {
 
 		void		splice(iterator position, list& x, iterator first, iterator last)
 		{
-			if (x.begin() == x.end() || first == x.end())
+			if (x.empty() || first == x.end())
 				return ;
 
 			iterator	tmp = first;
