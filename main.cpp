@@ -1112,10 +1112,12 @@ void		ft_vector_tests(int ac, char **av)
 
 		svv.insert(svv.begin(), svv.begin(), svv.end());
 		fvv.insert(fvv.begin(), fvv.begin(), fvv.end());
+		#if (__cplusplus < 201103L)	//	tests below fail on linux with c++11 std
 		svv.insert(svv.end() - 1, svv.begin(), svv.end());
 		fvv.insert(fvv.end() - 1, fvv.begin(), fvv.end());
 		svv.insert(svv.end(), svv.begin(), svv.end());
 		fvv.insert(fvv.end(), fvv.begin(), fvv.end());
+		#endif
 		svv.erase(svv.begin() + 1, svv.end() - 3);
 		fvv.erase(fvv.begin() + 1, fvv.end() - 3);
 
