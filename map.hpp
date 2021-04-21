@@ -63,13 +63,9 @@ namespace ft {
 				_node = _node->right;		//	last node or _null case
 			else							//	going up
 			{
-				map_node*	tmp = _node->parent;
-				while (tmp != _null && _node == tmp->right)
-				{
-					_node = tmp;
-					tmp = tmp->parent;
-				}
-				_node = tmp;
+				while (_node->parent != _null && _node == _node->parent->right)
+					_node = _node->parent;
+				_node = _node->parent;
 			}
 		}
 
@@ -82,13 +78,9 @@ namespace ft {
 				_node = _node->left;
 			else
 			{
-				map_node*	tmp = _node->parent;
-				while (tmp != _null && _node == tmp->left)
-				{
-					_node = tmp;
-					tmp = tmp->parent;
-				}
-				_node = tmp;
+				while (_node->parent != _null && _node == _node->parent->left)
+					_node = _node->parent;
+				_node = _node->parent;
 			}
 		}
 	};
