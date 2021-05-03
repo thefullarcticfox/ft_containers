@@ -88,6 +88,47 @@ namespace ft {
 	template <class T1, class T2>
 	ft::pair<T1, T2>	make_pair(T1 x, T2 y)
 	{	return (ft::pair<T1, T2>(x, y));	}
+
+	/*	heap algorithm	*/
+	//	temp solution is using std::*_heap stl functions
+	#include <algorithm>
+
+	template <class RandomAccessIterator>
+	void	make_heap(RandomAccessIterator first, RandomAccessIterator last)
+	{
+		std::make_heap(first, last);
+	}
+
+	template <class RandomAccessIterator, class Compare>
+	void	make_heap(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
+	{
+		std::make_heap(first, last, comp);
+	}
+
+	template <class RandomAccessIterator>
+	void	push_heap(RandomAccessIterator first, RandomAccessIterator last)
+	{
+		std::push_heap(first, last);
+	}
+
+	template <class RandomAccessIterator, class Compare>
+	void	push_heap(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
+	{
+		std::push_heap(first, last, comp);
+	}
+
+	template <class RandomAccessIterator>
+	void	pop_heap(RandomAccessIterator first, RandomAccessIterator last)
+	{
+		std::pop_heap(first, last);
+	}
+
+	template <class RandomAccessIterator, class Compare>
+	void	pop_heap(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
+	{
+		std::pop_heap(first, last, comp);
+	}
+
 }
 
 #endif
