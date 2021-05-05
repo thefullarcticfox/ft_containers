@@ -1,6 +1,7 @@
 #ifndef PRIORITY_QUEUE_HPP
 #define PRIORITY_QUEUE_HPP
 #include "functional.hpp"
+#include "algorithm.hpp"
 #include "vector.hpp"
 
 namespace ft {
