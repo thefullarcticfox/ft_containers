@@ -2406,7 +2406,7 @@ int			main(int ac, char **av)
 	//	a lot of data test: requires more than 320mb of ram with valgrind memcheck
 	//	and more than 640mb of ram with -fsanitize=address (asan + lsan on linux)
 	//	changing INSANITYSIZE changes ram usage accordingly
-	#if 1
+	#ifndef SKIPINSANITY
 	ft_iwanttotorturemyram();
 	#endif
 	return (0);
