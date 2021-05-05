@@ -1655,6 +1655,7 @@ void		ft_stack_tests()
 			sstack.pop();			fstack.pop();
 		}
 		std::cout << "total: " << ssum << " = " << fsum << '\n';
+		std::cout << CLR_GOOD << "containers are equal" << CLR_RESET << std::endl;
 	}
 
 	{
@@ -1705,6 +1706,7 @@ void		ft_stack_tests()
 		}
 		if (!sstack.empty() || !fstack.empty())
 			error_exception();
+		std::cout << CLR_GOOD << "containers are equal" << CLR_RESET << std::endl;
 	}
 
 	std::cout << CLR_GOOD << "stack tests passed" << CLR_RESET << std::endl << std::endl;
@@ -1726,8 +1728,8 @@ void		ft_queue_tests()
 			ssum += squeue.front();	fsum += fqueue.front();
 			squeue.pop();			fqueue.pop();
 		}
-
 		std::cout << "total: " << ssum << " = " << fsum << '\n';
+		std::cout << CLR_GOOD << "containers are equal" << CLR_RESET << std::endl;
 	}
 
 	{
@@ -1784,6 +1786,7 @@ void		ft_queue_tests()
 		}
 		if (!squeue.empty() || !fqueue.empty())
 			error_exception();
+		std::cout << CLR_GOOD << "containers are equal" << CLR_RESET << std::endl;
 	}
 
 	std::cout << CLR_GOOD << "queue tests passed" << CLR_RESET << std::endl << std::endl;
@@ -1806,8 +1809,8 @@ void		ft_priority_queue_tests()
 			std::cout << squeue.top() << " = " << fqueue.top() << std::endl;
 			squeue.pop();			fqueue.pop();
 		}
-
 		std::cout << "total: " << ssum << " = " << fsum << '\n';
+		std::cout << CLR_GOOD << "containers are equal" << CLR_RESET << std::endl;
 	}
 
 	{
@@ -1831,8 +1834,8 @@ void		ft_priority_queue_tests()
 		}
 		if (!squeue.empty() || !fqueue.empty())
 			error_exception();
-
 		std::cout << "total: " << ssum << " = " << fsum << '\n';
+		std::cout << CLR_GOOD << "containers are equal" << CLR_RESET << std::endl;
 	}
 
 	{
@@ -1842,10 +1845,7 @@ void		ft_priority_queue_tests()
 		while (slist.size() < 1000)
 		{
 			int		tmp(rand());
-			if (slist.size() % 2)
-			{	slist.push_back(tmp);		flist.push_back(tmp);	}
-			else
-			{	slist.push_front(tmp);		flist.push_front(tmp);	}
+			slist.push_back(tmp);	flist.push_back(tmp);
 		}
 
 		std::priority_queue<int>	squeue(slist.begin(), slist.end());
@@ -1861,6 +1861,33 @@ void		ft_priority_queue_tests()
 		}
 		if (!squeue.empty() || !fqueue.empty())
 			error_exception();
+		std::cout << CLR_GOOD << "containers are equal" << CLR_RESET << std::endl;
+	}
+
+	{
+		std::cout << "--------------" << std::endl;
+		std::list<int>	slist;				ft::list<int>	flist;
+
+		while (slist.size() < 1000)
+		{
+			int		tmp(rand());
+			slist.push_back(tmp);	flist.push_back(tmp);
+		}
+
+		std::priority_queue< int, std::vector<int>, std::greater<int> >	squeue(slist.begin(), slist.end());
+		ft::priority_queue< int, ft::vector<int>, ft::greater<int> >	fqueue(flist.begin(), flist.end());
+
+		std::cout << squeue.size() << " = " << fqueue.size() << std::endl;
+
+		while (!squeue.empty() && !fqueue.empty())
+		{
+			if (squeue.top() != fqueue.top())
+				error_exception();
+			squeue.pop();		fqueue.pop();
+		}
+		if (!squeue.empty() || !fqueue.empty())
+			error_exception();
+		std::cout << CLR_GOOD << "containers are equal" << CLR_RESET << std::endl;
 	}
 
 	std::cout << CLR_GOOD << "priority_queue tests passed" << CLR_RESET << std::endl << std::endl;
