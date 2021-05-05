@@ -120,10 +120,10 @@ namespace ft {
 	void	push_heap(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
 	{
 		typedef	ft::iterator_traits<RandomAccessIterator>	traits;
-		typename traits::difference_type	dist = last - first - 1;
-		while (dist > 0 && comp(*(first + (dist / 2)), *(first + dist))) {
-			_swap_iter_values(first + (dist / 2), first + dist);
-			dist /= 2;
+		typename traits::difference_type	i = last - first;
+		while (i > 1 && comp(first[i / 2 - 1], first[i - 1])) {
+			_swap_iter_values(first + (i / 2) - 1, first + i - 1);
+			i /= 2;
 		}
 	}
 
