@@ -24,8 +24,8 @@ namespace ft {
 	typename iterator_traits<InputIterator>::difference_type
 		distance(InputIterator first, InputIterator last)
 	{
-		return _find_distance(first, last,
-			typename iterator_traits<InputIterator>::iterator_category());
+		return (_find_distance(first, last,
+			typename iterator_traits<InputIterator>::iterator_category()));
 	}
 
 	//	additional function for heap algorithm
