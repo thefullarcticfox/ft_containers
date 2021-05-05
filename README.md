@@ -17,7 +17,8 @@ What's done:
 - pair and some relational operator templates
 
 Additionally:
-- priority_queue (to learn heaps)
+- distance, make_heap, push_heap, pop_heap algorithms
+- priority_queue
 
 ### Run tests
 ```clang++ main.cpp -std=c++98 -Wall -Wextra -Werror && ./a.out```
