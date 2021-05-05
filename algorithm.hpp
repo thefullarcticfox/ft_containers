@@ -38,7 +38,7 @@ namespace ft {
 		typedef	iterator_traits<RandomAccessIterator>	traits;
 		typename traits::difference_type	i = last - first;
 		while (i > 1 && comp(first[i / 2 - 1], first[i - 1])) {
-			_swap_iter_values(first + (i / 2) - 1, first + i - 1);
+			_swap_iter_values(first + (i / 2 - 1), first + (i - 1));
 			i /= 2;
 		}
 	}
