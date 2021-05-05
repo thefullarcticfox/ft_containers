@@ -7,7 +7,7 @@ namespace ft {
 
 	template<class Iterator>
 	typename std::iterator_traits<Iterator>::difference_type
-		_find_distance(Iterator first, Iterator last, std::input_iterator_tag)
+			_find_distance(Iterator first, Iterator last, std::input_iterator_tag)
 	{
 		typename std::iterator_traits<Iterator>::difference_type	res = 0;
 		for (; first != last; first++)
@@ -17,12 +17,12 @@ namespace ft {
 
 	template<class Iterator>
 	typename std::iterator_traits<Iterator>::difference_type
-		_find_distance(Iterator first, Iterator last, std::random_access_iterator_tag)
+			_find_distance(Iterator first, Iterator last, std::random_access_iterator_tag)
 	{	return (last - first);	}
 
 	template<class InputIterator>
 	typename iterator_traits<InputIterator>::difference_type
-		distance(InputIterator first, InputIterator last)
+			distance(InputIterator first, InputIterator last)
 	{
 		return (_find_distance(first, last,
 			typename iterator_traits<InputIterator>::iterator_category()));
