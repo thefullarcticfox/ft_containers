@@ -14,5 +14,11 @@ What's done:
 - iterator_traits and some type_traits adaptations
 - pair and some relational operator templates
 
+Additionally:
+- distance, make_heap, push_heap, pop_heap algorithms
+- priority_queue
+
 ### Run tests
 Open ```vs_containers.sln``` and build in Debug or Release x64 configuration
+
+> compile with `-DSKIPINSANITY` to run only basic tests without lots of data tests

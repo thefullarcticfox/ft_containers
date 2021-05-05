@@ -20,10 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="adapted_traits.hpp" />
+    <ClInclude Include="algorithm.hpp" />
     <ClInclude Include="allocator.hpp" />
     <ClInclude Include="functional.hpp" />
     <ClInclude Include="list.hpp" />
     <ClInclude Include="map.hpp" />
+    <ClInclude Include="priority_queue.hpp" />
     <ClInclude Include="queue.hpp" />
     <ClInclude Include="reverse_iterator.hpp" />
     <ClInclude Include="stack.hpp" />
