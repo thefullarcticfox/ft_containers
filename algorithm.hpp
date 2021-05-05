@@ -74,7 +74,7 @@ namespace ft {
 	void	push_heap(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
 	{
 		typedef	iterator_traits<RandomAccessIterator>	traits;
-		typename traits::difference_type	i = last - first;
+		typename traits::difference_type	i = distance(first, last);
 		while (i > 1 && comp(first[i / 2 - 1], first[i - 1])) {
 			_swap_values(first + (i / 2 - 1), first + (i - 1));
 			i /= 2;
