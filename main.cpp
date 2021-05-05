@@ -301,6 +301,8 @@ void		ft_list_tests(int ac, char **av)
 
 	std::cout << "std::distance slist3: " << std::distance(slist3.begin(), slist3.end()) << std::endl;
 	std::cout << "std::distance flist3: " << std::distance(flist3.begin(), flist3.end()) << std::endl;
+	std::cout << "ft::distance slist3: " << ft::distance(slist3.begin(), slist3.end()) << std::endl;
+	std::cout << "ft::distance flist3: " << ft::distance(flist3.begin(), flist3.end()) << std::endl;
 
 	{
 		std::list<std::string>	slist0(flist2.begin(), flist2.end());
@@ -2324,7 +2326,7 @@ void		ft_iwanttotorturemyram()
 				continue;
 			//	without workaround above the line below triggers
 			//	"incompatible iterators" exception for some reason
-			auto diff1 = svect.erase(svect.begin() + tmp) - svect.begin(); 
+			auto diff1 = svect.erase(svect.begin() + tmp) - svect.begin();
 			auto diff2 = fvect.erase(fvect.begin() + tmp) - fvect.begin();
 			if (diff1 != diff2)
 				error_exception();
