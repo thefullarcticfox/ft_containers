@@ -21,3 +21,5 @@ Additionally:
 
 ### Run tests
 ```clang++ main.cpp -std=c++98 -Wall -Wextra -Werror && ./a.out```
+
+> compile with `-DSKIPINSANITY` to run only basic tests without lots of data tests
