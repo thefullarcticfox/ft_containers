@@ -16,5 +16,8 @@ What's done:
 - iterator_traits and some type_traits adaptations
 - pair and some relational operator templates
 
+Additionally:
+- priority_queue (to learn heaps)
+
 ### Run tests
 ```clang++ main.cpp -std=c++98 -Wall -Wextra -Werror && ./a.out```

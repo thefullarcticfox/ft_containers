@@ -89,44 +89,61 @@ namespace ft {
 	ft::pair<T1, T2>	make_pair(T1 x, T2 y)
 	{	return (ft::pair<T1, T2>(x, y));	}
 
-	/*	heap algorithm	*/
-	//	temp solution is using std::*_heap stl functions
-	#include <algorithm>
-
-	template <class RandomAccessIterator>
-	void	make_heap(RandomAccessIterator first, RandomAccessIterator last)
-	{
-		std::make_heap(first, last);
+	//	additional function for heap algorithm
+	template <class Iterator>
+	void	_swap_iter_values(Iterator first, Iterator second) {
+		typename ft::iterator_traits<Iterator>::value_type	tmp = *first;
+		*first = *second;
+		*second = tmp;
 	}
 
+	/*	heap algorithm	*/
+	//	temp solution is using std::make_heap function
+	#include <algorithm>
 	template <class RandomAccessIterator, class Compare>
 	void	make_heap(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
 	{
+		typedef	ft::iterator_traits<RandomAccessIterator>	traits;
+		typename traits::difference_type	dist = last - first - 1;
+		if (dist < 1)
+			return;
 		std::make_heap(first, last, comp);
 	}
 
 	template <class RandomAccessIterator>
-	void	push_heap(RandomAccessIterator first, RandomAccessIterator last)
+	void	make_heap(RandomAccessIterator first, RandomAccessIterator last)
 	{
-		std::push_heap(first, last);
+		make_heap(first, last, ft::less<typename ft::iterator_traits<RandomAccessIterator>::value_type>());
 	}
 
 	template <class RandomAccessIterator, class Compare>
 	void	push_heap(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
 	{
-		std::push_heap(first, last, comp);
+		typedef	ft::iterator_traits<RandomAccessIterator>	traits;
+		typename traits::difference_type	dist = last - first - 1;
+		while (dist > 0 && comp(*(first + (dist / 2)), *(first + dist))) {
+			_swap_iter_values(first + (dist / 2), first + dist);
+			dist /= 2;
+		}
 	}
 
 	template <class RandomAccessIterator>
-	void	pop_heap(RandomAccessIterator first, RandomAccessIterator last)
+	void	push_heap(RandomAccessIterator first, RandomAccessIterator last)
 	{
-		std::pop_heap(first, last);
+		push_heap(first, last, ft::less<typename ft::iterator_traits<RandomAccessIterator>::value_type>());
 	}
 
 	template <class RandomAccessIterator, class Compare>
 	void	pop_heap(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
 	{
-		std::pop_heap(first, last, comp);
+		_swap_iter_values(first, --last);
+		make_heap(first, last, comp);
+	}
+
+	template <class RandomAccessIterator>
+	void	pop_heap(RandomAccessIterator first, RandomAccessIterator last)
+	{
+		pop_heap(first, last, ft::less<typename ft::iterator_traits<RandomAccessIterator>::value_type>());
 	}
 
 }

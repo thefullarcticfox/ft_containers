@@ -1825,8 +1825,12 @@ void		ft_priority_queue_tests()
 		{
 			ssum += squeue.top();	fsum += fqueue.top();
 			std::cout << squeue.top() << " = " << fqueue.top() << std::endl;
+			if (squeue.top() != fqueue.top())
+				error_exception();
 			squeue.pop();			fqueue.pop();
 		}
+		if (!squeue.empty() || !fqueue.empty())
+			error_exception();
 
 		std::cout << "total: " << ssum << " = " << fsum << '\n';
 	}
