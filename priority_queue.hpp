@@ -21,7 +21,7 @@ namespace ft {
 		priority_queue(const Compare& comp = Compare(),
 			const Container& ctnr = Container()) : c(ctnr), comp(comp)
 		{
-			ft::make_heap(c.begin(), c.end(), comp);
+			make_heap(c.begin(), c.end(), comp);
 		}
 
 		template <class InputIterator>
@@ -29,7 +29,7 @@ namespace ft {
 			const Container& ctnr = Container()) : c(ctnr), comp(comp)
 		{
 			c.insert(c.end(), first, last);
-			ft::make_heap(c.begin(), c.end(), comp);
+			make_heap(c.begin(), c.end(), comp);
 		}
 
 		bool		empty() const			{	return (this->c.empty());	}
@@ -41,12 +41,12 @@ namespace ft {
 		void	push(const value_type& val)
 		{
 			c.push_back(val);
-			ft::push_heap(c.begin(), c.end(), comp);
+			push_heap(c.begin(), c.end(), comp);
 		}
 
 		void	pop()
 		{
-			ft::pop_heap(c.begin(), c.end(), comp);
+			pop_heap(c.begin(), c.end(), comp);
 			c.pop_back();
 		}
 	};
