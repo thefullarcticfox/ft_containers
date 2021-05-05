@@ -30,7 +30,7 @@ namespace ft {
 
 	//	additional function for heap algorithm
 	template <class Iterator>
-	void	_swap_iter_values(Iterator first, Iterator second)
+	void	_swap_values(Iterator first, Iterator second)
 	{
 		typename iterator_traits<Iterator>::value_type	tmp = *first;
 		*first = *second;
@@ -51,7 +51,7 @@ namespace ft {
 		if (right <= size && comp(first[largest - 1], first[right - 1]))
 			largest = right;
 		if (index != largest) {
-			_swap_iter_values(first + (index - 1), first + (largest - 1));
+			_swap_values(first + (index - 1), first + (largest - 1));
 			_heapify(first, last, comp, largest);
 		}
 	}
@@ -76,7 +76,7 @@ namespace ft {
 		typedef	iterator_traits<RandomAccessIterator>	traits;
 		typename traits::difference_type	i = last - first;
 		while (i > 1 && comp(first[i / 2 - 1], first[i - 1])) {
-			_swap_iter_values(first + (i / 2 - 1), first + (i - 1));
+			_swap_values(first + (i / 2 - 1), first + (i - 1));
 			i /= 2;
 		}
 	}
@@ -90,7 +90,7 @@ namespace ft {
 	template <class RandomAccessIterator, class Compare>
 	void	pop_heap(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
 	{
-		_swap_iter_values(first, --last);
+		_swap_values(first, --last);
 		make_heap(first, last, comp);
 	}
 
