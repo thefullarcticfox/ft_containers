@@ -20,9 +20,7 @@ namespace ft {
 		explicit
 		priority_queue(const Compare& comp = Compare(),
 			const Container& ctnr = Container()) : c(ctnr), comp(comp)
-		{
-			make_heap(c.begin(), c.end(), comp);
-		}
+		{	make_heap(c.begin(), c.end(), comp);	}
 
 		template <class InputIterator>
 		priority_queue(InputIterator first, InputIterator last, const Compare& comp = Compare(),
