@@ -1,29 +1,67 @@
 #ifndef ALGORITHM_HPP
 #define ALGORITHM_HPP
+#include "adapted_traits.hpp"
 #include "functional.hpp"
 
 namespace ft {
 
+	template<class Iterator>
+	typename std::iterator_traits<Iterator>::difference_type
+		_find_distance(Iterator first, Iterator last, std::input_iterator_tag)
+	{
+		typename std::iterator_traits<Iterator>::difference_type	res = 0;
+		for (; first != last; first++)
+			++res;
+		return (res);
+	}
+
+	template<class Iterator>
+	typename std::iterator_traits<Iterator>::difference_type
+		_find_distance(Iterator first, Iterator last, std::random_access_iterator_tag)
+	{	return (last - first);	}
+
+	template<class InputIterator>
+	typename iterator_traits<InputIterator>::difference_type
+		distance(InputIterator first, InputIterator last)
+	{
+		return _find_distance(first, last,
+			typename iterator_traits<InputIterator>::iterator_category());
+	}
+
 	//	additional function for heap algorithm
 	template <class Iterator>
-	void	_swap_iter_values(Iterator first, Iterator second) {
+	void	_swap_iter_values(Iterator first, Iterator second)
+	{
 		typename iterator_traits<Iterator>::value_type	tmp = *first;
 		*first = *second;
 		*second = tmp;
 	}
 
-	//	temp solution is using std::make_heap function
-	#include <algorithm>
-
 	/*	heap algorithm	*/
+	template <class Iterator, class Compare, class DiffType>
+	void	_heapify(Iterator first, Iterator last, Compare comp, DiffType index)
+	{
+		DiffType	size = distance(first, last);
+		DiffType	left = index * 2;
+		DiffType	right = index * 2 + 1;
+		DiffType	largest = index;
+
+		if (left <= size && comp(first[largest - 1], first[left - 1]))
+			largest = left;
+		if (right <= size && comp(first[largest - 1], first[right - 1]))
+			largest = right;
+		if (index != largest) {
+			_swap_iter_values(first + (index - 1), first + (largest - 1));
+			_heapify(first, last, comp, largest);
+		}
+	}
+
 	template <class RandomAccessIterator, class Compare>
 	void	make_heap(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
 	{
-		typedef	iterator_traits<RandomAccessIterator>	traits;
-		typename traits::difference_type	dist = last - first - 1;
-		if (dist < 1)
-			return;
-		std::make_heap(first, last, comp);
+		typedef typename iterator_traits<RandomAccessIterator>::difference_type	t_diff;
+		for (t_diff i = distance(first, last) / 2; i >= 1; i--)
+			_heapify(first, last, comp, i);
 	}
 
 	template <class RandomAccessIterator>
