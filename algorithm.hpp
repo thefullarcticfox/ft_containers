@@ -18,9 +18,7 @@ namespace ft {
 	template<class Iterator>
 	typename iterator_traits<Iterator>::difference_type
 			_find_distance(Iterator first, Iterator last, std::random_access_iterator_tag)
-	{
-		return (last - first);
-	}
+	{	return (last - first);	}
 
 	template<class InputIterator>
 	typename iterator_traits<InputIterator>::difference_type
@@ -102,6 +100,18 @@ namespace ft {
 		pop_heap(first, last, less<typename iterator_traits<RandomAccessIterator>::value_type>());
 	}
 
+	template <class RandomAccessIterator, class Compare>
+	void	sort_heap(RandomAccessIterator first, RandomAccessIterator last, Compare comp)
+	{
+		while (distance(first, last) > 1)
+			pop_heap(first, last--, comp);
+	}
+
+	template <class RandomAccessIterator>
+	void	sort_heap(RandomAccessIterator first, RandomAccessIterator last)
+	{
+		sort_heap(first, last, less<typename iterator_traits<RandomAccessIterator>::value_type>());
+	}
 }
 
 #endif
