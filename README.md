@@ -17,7 +17,7 @@ What's done:
 - pair and some relational operator templates
 
 Additionally:
-- distance, make_heap, push_heap, pop_heap algorithms
+- distance, make_heap, push_heap, pop_heap, sort_heap algorithms
 - priority_queue
 
 ### Run tests
