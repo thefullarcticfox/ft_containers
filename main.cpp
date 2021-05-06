@@ -2443,6 +2443,36 @@ void		ft_reviter_tests()
 	std::cout << std::endl;
 }
 
+void		ft_sort_heap_test()
+{
+	std::cout << "additional sort_heap tests" << std::endl;
+	std::vector<int>	svect;	ft::vector<int>		fvect;
+	svect.reserve(1000);		fvect.reserve(1000);
+	while (svect.size() < 1000) {
+		int	tmp(rand());
+		svect.push_back(tmp);	fvect.push_back(tmp);
+	}
+	are_equal_print(svect, fvect);
+
+	std::make_heap(svect.begin(), svect.end());
+	ft::make_heap(fvect.begin(), fvect.end());
+	are_equal_print(svect, fvect);
+
+	std::sort_heap(svect.begin(), svect.end());
+	ft::sort_heap(fvect.begin(), fvect.end());
+	are_equal_print(svect, fvect);
+
+	std::make_heap(svect.begin(), svect.end(), std::greater<int>());
+	ft::make_heap(fvect.begin(), fvect.end(), ft::greater<int>());
+	are_equal_print(svect, fvect);
+
+	std::sort_heap(svect.begin(), svect.end(), std::greater<int>());
+	ft::sort_heap(fvect.begin(), fvect.end(), ft::greater<int>());
+	are_equal_print(svect, fvect);
+
+	std::cout << std::endl;
+}
+
 int			main(int ac, char **av)
 {
 	//	common stuff
@@ -2457,6 +2487,7 @@ int			main(int ac, char **av)
 	ft_stack_tests();
 	ft_queue_tests();
 	ft_priority_queue_tests();
+	ft_sort_heap_test();
 	ft_reviter_tests();
 
 	//	a lot of data test: requires more than 320mb of ram with valgrind memcheck
