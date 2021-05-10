@@ -5,16 +5,16 @@
 
 namespace ft {
 
-	template <class InputIterator1, class InputIterator2>
-	struct _iterators_less	: binary_function<InputIterator1, InputIterator2, bool> {
-		bool	operator()(const InputIterator1& x, const InputIterator2& y) const
-		{	return (*x < *y);	}
+	template <class T1, class T2>
+	struct _equal_twotypes	: binary_function<T1, T2, bool> {
+		bool	operator()(const T1& x, const T2& y) const
+		{	return (x == y);	}
 	};
 
-	template <class InputIterator1, class InputIterator2>
-	struct _iterators_equal	: binary_function<InputIterator1, InputIterator2, bool> {
-		bool	operator()(const InputIterator1& x, const InputIterator2& y) const
-		{	return (*x == *y);	}
+	template <class T1, class T2>
+	struct _less_twotypes	: binary_function<T1, T2, bool> {
+		bool	operator()(const T1& x, const T2& y) const
+		{	return (x < y);		}
 	};
 
 	template <class InputIterator1, class InputIterator2, class BinaryPredicate>
@@ -23,17 +23,11 @@ namespace ft {
 	{
 		while (first1 != last1)
 		{
-			if (!pred(first1, first2))
+			if (!pred(*first1, *first2))
 				return (false);
 			++first1; ++first2;
 		}
 		return (true);
-	}
-
-	template <class InputIterator1, class InputIterator2>
-	bool	equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
-	{
-		return (ft::equal(first1, last1, first2, _iterators_equal<InputIterator1, InputIterator2>()));
 	}
 
 	template <class InputIterator1, class InputIterator2, class Compare>
@@ -42,9 +36,9 @@ namespace ft {
 	{
 		while (first1 != last1)
 		{
-			if (first2 == last2 || comp(first2, first1))
+			if (first2 == last2 || comp(*first2, *first1))
 				return (false);
-			else if (comp(first1, first2))
+			else if (comp(*first1, *first2))
 				return (true);
 			++first1;	++first2;
 		}
@@ -52,11 +46,20 @@ namespace ft {
 	}
 
 	template <class InputIterator1, class InputIterator2>
+	bool	equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
+	{
+		typedef typename ft::iterator_traits<InputIterator1>::value_type	type1;
+		typedef typename ft::iterator_traits<InputIterator2>::value_type	type2;
+		return (ft::equal(first1, last1, first2, _equal_twotypes<type1, type2>()));
+	}
+
+	template <class InputIterator1, class InputIterator2>
 	bool	lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
 									InputIterator2 first2, InputIterator2 last2)
 	{
-		return (ft::lexicographical_compare(first1, last1, first2, last2,
-			_iterators_less<InputIterator1, InputIterator2>()));
+		typedef typename ft::iterator_traits<InputIterator1>::value_type	type1;
+		typedef typename ft::iterator_traits<InputIterator2>::value_type	type2;
+		return (ft::lexicographical_compare(first1, last1, first2, last2, _less_twotypes<type1, type2>()));
 	}
 
 	template <class Iterator>
