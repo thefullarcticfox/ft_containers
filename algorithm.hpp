@@ -5,6 +5,60 @@
 
 namespace ft {
 
+	template <class InputIterator1, class InputIterator2>
+	struct _iterators_less	: binary_function<InputIterator1, InputIterator2, bool> {
+		bool	operator()(const InputIterator1& x, const InputIterator2& y) const
+		{	return (*x < *y);	}
+	};
+
+	template <class InputIterator1, class InputIterator2>
+	struct _iterators_equal	: binary_function<InputIterator1, InputIterator2, bool> {
+		bool	operator()(const InputIterator1& x, const InputIterator2& y) const
+		{	return (*x == *y);	}
+	};
+
+	template<class InputIterator1, class InputIterator2, class Compare>
+	bool	lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
+									InputIterator2 first2, InputIterator2 last2, Compare comp)
+	{
+		while (first1 != last1)
+		{
+			if (first2 == last2 || comp(*first2, *first1))
+				return (false);
+			else if (comp(*first1, *first2))
+				return (true);
+			++first1;	++first2;
+		}
+		return (first2 != last2);
+	}
+
+	template<class InputIterator1, class InputIterator2>
+	bool	lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
+									InputIterator2 first2, InputIterator2 last2)
+	{
+		return (lexicographical_compare(first1, last1, first2, last2,
+			_iterators_less<InputIterator1, InputIterator2>()));
+	}
+
+	template<class InputIterator1, class InputIterator2, class BinaryPredicate>
+	bool	equal(InputIterator1 first1, InputIterator1 last1,
+				InputIterator2 first2, BinaryPredicate pred)
+	{
+		while (first1 != last1)
+		{
+			if (!pred(*first1, *first2))
+				return (false);
+			++first1; ++first2;
+		}
+		return (true);
+	}
+
+	template<class InputIterator1, class InputIterator2>
+	bool	equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
+	{
+		return (equal(first1, last1, first2, _iterators_equal<InputIterator1, InputIterator2>()));
+	}
+
 	template<class Iterator>
 	typename iterator_traits<Iterator>::difference_type
 			_find_distance(Iterator first, Iterator last, std::input_iterator_tag)
