@@ -3,6 +3,7 @@
 #include <iterator>				//	std::bidirectional_iterator_tag
 #include "adapted_traits.hpp"	//	type_traits
 #include "allocator.hpp"		//	allocator
+#include "algorithm.hpp"		//	equal, lexicographical_compare
 #include "functional.hpp"		//	less, equal_to
 #include "reverse_iterator.hpp"	//	reverse_iterator
 
@@ -684,15 +685,7 @@ namespace ft {
 	{
 		if (lhs.size() != rhs.size())
 			return (false);
-		typename ft::list<T, Alloc>::const_iterator	it1 = lhs.begin();
-		typename ft::list<T, Alloc>::const_iterator	it2 = rhs.begin();
-		while (it1 != lhs.end())
-		{
-			if (!(*it1 == *it2))
-				return (false);
-			++it1;	++it2;
-		}
-		return (true);
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 	}
 
 	template <class T, class Alloc>
@@ -702,18 +695,7 @@ namespace ft {
 	template <class T, class Alloc>
 	bool	operator<(const ft::list<T, Alloc>& lhs, const ft::list<T, Alloc>& rhs)
 	{
-		typename ft::list<T, Alloc>::const_iterator	it1 = lhs.begin();
-		typename ft::list<T, Alloc>::const_iterator	it2 = rhs.begin();
-
-		while (it1 != lhs.end())
-		{
-			if (it2 == rhs.end() || *it2 < *it1)
-				return (false);
-			else if (*it1 < *it2)
-				return (true);
-			++it1;	++it2;
-		}
-		return (it2 != rhs.end());
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 
 	template <class T, class Alloc>
