@@ -3,6 +3,7 @@
 #include <iterator>				//	std::bidirectional_iterator_tag
 #include <utility>				//	std::pair (to compare with std::map)
 #include "allocator.hpp"		//	allocator
+#include "algorithm.hpp"		//	equal, lexicographical_compare
 #include "functional.hpp"		//	binary_function, less, equal_to, pair
 #include "reverse_iterator.hpp"	//	reverse_iterator
 
@@ -921,15 +922,7 @@ namespace ft {
 	{
 		if (lhs.size() != rhs.size())
 			return (false);
-		typename ft::map<Key, T, Compare, Alloc>::const_iterator	it1 = lhs.begin();
-		typename ft::map<Key, T, Compare, Alloc>::const_iterator	it2 = rhs.begin();
-		while (it1 != lhs.end())
-		{
-			if (!(*it1 == *it2))
-				return (false);
-			++it1;	++it2;
-		}
-		return (true);
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 	}
 
 	template <class Key, class T, class Compare, class Alloc>
@@ -941,18 +934,7 @@ namespace ft {
 	bool	operator<(const ft::map<Key, T, Compare, Alloc>& lhs,
 						const ft::map<Key, T, Compare, Alloc>& rhs)
 	{
-		typename ft::map<Key, T, Compare, Alloc>::const_iterator	it1 = lhs.begin();
-		typename ft::map<Key, T, Compare, Alloc>::const_iterator	it2 = rhs.begin();
-
-		while (it1 != lhs.end())
-		{
-			if (it2 == rhs.end() || *it2 < *it1)
-				return (false);
-			else if (*it1 < *it2)
-				return (true);
-			++it1;	++it2;
-		}
-		return (it2 != rhs.end());
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 
 	template <class Key, class T, class Compare, class Alloc>

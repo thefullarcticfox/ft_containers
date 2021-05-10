@@ -17,49 +17,49 @@ namespace ft {
 		{	return (*x == *y);	}
 	};
 
-	template<class InputIterator1, class InputIterator2, class Compare>
-	bool	lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
-									InputIterator2 first2, InputIterator2 last2, Compare comp)
-	{
-		while (first1 != last1)
-		{
-			if (first2 == last2 || comp(*first2, *first1))
-				return (false);
-			else if (comp(*first1, *first2))
-				return (true);
-			++first1;	++first2;
-		}
-		return (first2 != last2);
-	}
-
-	template<class InputIterator1, class InputIterator2>
-	bool	lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
-									InputIterator2 first2, InputIterator2 last2)
-	{
-		return (lexicographical_compare(first1, last1, first2, last2,
-			_iterators_less<InputIterator1, InputIterator2>()));
-	}
-
-	template<class InputIterator1, class InputIterator2, class BinaryPredicate>
+	template <class InputIterator1, class InputIterator2, class BinaryPredicate>
 	bool	equal(InputIterator1 first1, InputIterator1 last1,
 				InputIterator2 first2, BinaryPredicate pred)
 	{
 		while (first1 != last1)
 		{
-			if (!pred(*first1, *first2))
+			if (!pred(first1, first2))
 				return (false);
 			++first1; ++first2;
 		}
 		return (true);
 	}
 
-	template<class InputIterator1, class InputIterator2>
+	template <class InputIterator1, class InputIterator2>
 	bool	equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
 	{
-		return (equal(first1, last1, first2, _iterators_equal<InputIterator1, InputIterator2>()));
+		return (ft::equal(first1, last1, first2, _iterators_equal<InputIterator1, InputIterator2>()));
 	}
 
-	template<class Iterator>
+	template <class InputIterator1, class InputIterator2, class Compare>
+	bool	lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
+									InputIterator2 first2, InputIterator2 last2, Compare comp)
+	{
+		while (first1 != last1)
+		{
+			if (first2 == last2 || comp(first2, first1))
+				return (false);
+			else if (comp(first1, first2))
+				return (true);
+			++first1;	++first2;
+		}
+		return (first2 != last2);
+	}
+
+	template <class InputIterator1, class InputIterator2>
+	bool	lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
+									InputIterator2 first2, InputIterator2 last2)
+	{
+		return (ft::lexicographical_compare(first1, last1, first2, last2,
+			_iterators_less<InputIterator1, InputIterator2>()));
+	}
+
+	template <class Iterator>
 	typename iterator_traits<Iterator>::difference_type
 			_find_distance(Iterator first, Iterator last, std::input_iterator_tag)
 	{
@@ -69,12 +69,12 @@ namespace ft {
 		return (res);
 	}
 
-	template<class Iterator>
+	template <class Iterator>
 	typename iterator_traits<Iterator>::difference_type
 			_find_distance(Iterator first, Iterator last, std::random_access_iterator_tag)
 	{	return (last - first);	}
 
-	template<class InputIterator>
+	template <class InputIterator>
 	typename iterator_traits<InputIterator>::difference_type
 			distance(InputIterator first, InputIterator last)
 	{
