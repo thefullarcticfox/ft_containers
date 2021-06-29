@@ -45,13 +45,18 @@ namespace ft {
 		//	initialization (3)
 		pair(const first_type& a, const second_type& b) : first(a), second(b) {}
 
-		//	implicitly declared:
-		pair&	operator=(const pair& pr)
-		{
-			this->first = pr.first;
-			this->second = pr.second;
-			return (*this);
-		}
+		/*	implicitly declared:
+		*	pair&	operator=(const pair& pr)
+		*	{
+		*		this->first = pr.first;
+		*		this->second = pr.second;
+		*		return (*this);
+		*	}
+		*
+		*	if compiled with clang++ -Wall -Wextra -Werror without -std=c++98 flag it throws error:
+		*	definition of implicit copy constructor for 'pair<const int, int>' is deprecated because
+		*	it has a user-declared copy assignment operator [-Werror,-Wdeprecated-copy]
+		*/
 	};
 
 	/*	non-member function overloads (pair)	*/
