@@ -34,15 +34,17 @@ namespace ft {
 
 		/*	copy constructor from nonconst iterator						*/
 		/*	the idea is from libcpp (doesn't work for list/tree nodes)	*/
-		template <class _Ptr>
-		vector_iterator(const vector_iterator<_Ptr, NonConstPtr>& x,
-			typename type_check_if_same<_Ptr, NonConstPtr>::_type* check = NULL) :
+		template <class OtherPtr>
+		vector_iterator(const vector_iterator<OtherPtr, NonConstPtr>& x,
+			typename type_check_if_same<OtherPtr, NonConstPtr>::_type* check = NULL) :
 			_node(x.base()) { (void)check; }
 
 		~vector_iterator() {}
 
-		vector_iterator		operator=(const vector_iterator& x)
+		vector_iterator&	operator=(const vector_iterator& x)
 		{
+			if (this == &x)
+				return (*this);
 			this->_node = x._node;
 			return (*this);
 		}
@@ -584,9 +586,19 @@ namespace ft {
 			//	convert to bool
 			operator	bool() const { return (bit); }
 			//	assign from bool
-			reference&	operator=(const bool x)			{ bit = x; return (*this); }
+			reference&	operator=(const bool x)
+			{
+				bit = x;
+				return (*this);
+			}
 			//	assign from bit
-			reference&	operator=(const reference& x)	{ this->bit = x.bit; return (*this); }
+			reference&	operator=(const reference& x)
+			{
+				if (this == &x)
+					return (*this);
+				this->bit = x.bit;
+				return (*this);
+			}
 			//	flip bit value.
 			void		flip() { bit = !bit; }
 		};

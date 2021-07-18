@@ -1,9 +1,7 @@
 #include <iostream>
-#include <sstream>
 #include <algorithm>
 #include <list>
 #include <map>
-#include <deque>
 #include <queue>
 #include <stack>
 #include <vector>
@@ -21,7 +19,7 @@
 #define	CLR_ERROR	"\033[41;30m"
 #define	CLR_WARN	"\033[48;5;202m\033[38;5;0m"
 #define	CLR_RESET	"\033[0m"
-#define STR_FAIL	std::string(CLR_ERROR) + "failed test" + CLR_RESET
+//#define STR_FAIL	std::string(CLR_ERROR) + "failed test" + CLR_RESET
 
 /*	**************************************************	*/
 /*	this *MAY* decrease the exection time of the tests	*/
@@ -29,14 +27,15 @@
 /*	NOTICE: this DOES NOT increase the perfomance		*/
 /*	this code is just for me to note and remember		*/
 /*	**************************************************	*/
-void		iostreamhack()
-{
-//	detaches cstdio and iostream (this is ok if i don't use C streams with C++ streams)
-//	this also creates still reachable leaks at exit because it allocates different buffers
-	std::ios_base::sync_with_stdio(false);
-//	unties cin and cout meaning that if i used cin i would need to manually flush cout
-	std::cin.tie(NULL);
-}
+/*void		iostream_hack()
+ *{
+ *  //	detaches cstdio and iostream (this is ok if i don't use C streams with C++ streams)
+ *  //	this also creates still reachable leaks at exit because it allocates different buffers
+ *	std::ios_base::sync_with_stdio(false);
+ *  //	unties cin and cout meaning that if i used cin i would need to manually flush cout
+ *	std::cin.tie(NULL);
+ *}
+ */
 
 void		error_exception(const std::string& hint = "")
 {
@@ -217,18 +216,20 @@ void		ft_list_tests(int ac, char **av)
 	std::list<std::string>	slist2(5, "hello");
 	ft::list<std::string>	flist2(5, "hello");
 
-	int	i = 0;
-	for (std::list<std::string>::iterator it = slist2.begin(); it != slist2.end(); it++)
-	{
-		i++;
-		(*it) += ft_tostring(i);
-	}
+    {
+		int	i = 0;
+		for (std::list<std::string>::iterator it = slist2.begin(); it != slist2.end(); it++)
+		{
+			i++;
+			(*it) += ft_tostring(i);
+		}
 
-	i = 0;
-	for (ft::list<std::string>::iterator it = flist2.begin(); it != flist2.end(); it++)
-	{
-		i++;
-		(*it) += ft_tostring(i);
+		i = 0;
+		for (ft::list<std::string>::iterator it = flist2.begin(); it != flist2.end(); it++)
+		{
+			i++;
+			(*it) += ft_tostring(i);
+		}
 	}
 
 	printbothdirs(slist2, flist2);
@@ -1419,12 +1420,12 @@ void		ft_map_tests()
 		sret = smap.insert(std::pair<char,int>('z', 500));	fret = fmap.insert(std::pair<char,int>('z', 500));
 		are_equal_print(smap, fmap);
 
-		if (sret.second == false)
+		if (!sret.second)
 		{
 			std::cout << "element 'z' already existed";
 			std::cout << " with a value of " << sret.first->second << '\n';
 		}
-		if (fret.second == false)
+		if (!fret.second)
 		{
 			std::cout << "element 'z' already existed";
 			std::cout << " with a value of " << sret.first->second << '\n';

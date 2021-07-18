@@ -28,8 +28,10 @@ namespace ft {
 		data(data), parent(treenull), left(treenull), right(treenull), isred(true) {}
 		map_base(const map_base& x) :
 		data(x.data), parent(x.parent), left(x.left), right(x.right), isred(x.isred) {}
-		map_base	&operator=(const map_base& x)
+		map_base&	operator=(const map_base& x)
 		{
+			if (this == &x)
+				return (*this);
 			this->data = x.data;
 			this->parent = x.parent;
 			this->left = x.left;
@@ -111,8 +113,10 @@ namespace ft {
 
 		~map_iterator() {}
 
-		map_iterator	operator=(const map_iterator& x)
+		map_iterator&	operator=(const map_iterator& x)
 		{
+			if (this == &x)
+				return (*this);
 			this->_node = x._node;
 			this->_null = x._null;
 			return (*this);
@@ -189,15 +193,19 @@ namespace ft {
 
 		~map_const_iterator() {}
 
-		map_const_iterator	operator=(const map_const_iterator& x)
+		map_const_iterator&	operator=(const map_const_iterator& x)
 		{
+			if (this == &x)
+				return (*this);
 			this->_node = x._node;
 			this->_null = x._null;
 			return (*this);
 		}
 
-		map_const_iterator	operator=(const iterator& x)
+		map_const_iterator&	operator=(const iterator& x)
 		{
+			if (this == &x)
+				return (*this);
 			this->_node = x.base();
 			this->_null = x.null();
 			return (*this);
@@ -652,7 +660,7 @@ namespace ft {
 				sccsr->isred = node->isred;
 			}
 
-			if (orig_isred == false)
+			if (!orig_isred)
 				_map_delete_fix(node_child);
 
 			//	restoring min and max on _null

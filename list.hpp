@@ -23,8 +23,10 @@ namespace ft {
 		//	i don't use those but i keep them just in case
 		list_base(const value_type& data) : data(data), prev(this), next(this) {}
 		list_base(const list_base& x) : data(x.data), prev(x.prev), next(x.next) {}
-		list_base	&operator=(const list_base& x)
+		list_base&	operator=(const list_base& x)
 		{
+			if (this == &x)
+				return (*this);
 			this->data = x.data;
 			this->prev = x.prev;
 			this->next = x.next;
@@ -58,8 +60,10 @@ namespace ft {
 
 		~list_iterator() {}
 
-		list_iterator	operator=(const list_iterator& x)
+		list_iterator&	operator=(const list_iterator& x)
 		{
+			if (this == &x)
+				return (*this);
 			this->_node = x._node;
 			return (*this);
 		}
@@ -123,14 +127,18 @@ namespace ft {
 
 		~list_const_iterator() {}
 
-		list_const_iterator	operator=(const list_const_iterator& x)
+		list_const_iterator&	operator=(const list_const_iterator& x)
 		{
+			if (this == &x)
+				return (*this);
 			this->_node = x._node;
 			return (*this);
 		}
 
-		list_const_iterator	operator=(const iterator& x)
+		list_const_iterator&	operator=(const iterator& x)
 		{
+			if (this == &x)
+				return (*this);
 			this->_node = x.base();
 			return (*this);
 		}
